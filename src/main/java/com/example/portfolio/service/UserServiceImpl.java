@@ -1,5 +1,6 @@
 package com.example.portfolio.service;
 
+import com.example.portfolio.dto.UserDetails;
 import com.example.portfolio.Entity.User;
 import com.example.portfolio.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -35,12 +36,16 @@ public class UserServiceImpl {
     public List<User> GetAllUser (){
         return userRepository.findAll();
     }
-    public User updateUser(Long id, User userDetails) {
+    public User updateUser(Long id, UserDetails userDetails) {
         User user = userRepository.findById(id).orElseThrow(()-> new RuntimeException("User not found"));
         modelMapper.map(userDetails,user);
         return userRepository.save(user);
+
+
+
     }
     public void deleteUser(Long id) {
-        userRepository.deleteById(id);
+        User user = userRepository.findById(id).orElseThrow(()-> new RuntimeException("User not found"));
+        userRepository.delete(user);
     }
 }

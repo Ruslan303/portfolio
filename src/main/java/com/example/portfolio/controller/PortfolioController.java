@@ -34,7 +34,6 @@ public class PortfolioController {
         Map<String, Object> response = new HashMap<>();
         response.put("message", "Portfolios successfully retrieved.");
         response.put("portfolios", portfolios);
-
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
@@ -59,6 +58,13 @@ public class PortfolioController {
         response.put("portfolio", updatePortfolio);
         return ResponseEntity.status(HttpStatus.OK).body(response);
 
+
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<String> deletePortfolio(@PathVariable Long id) {
+        portfolioServiceImpl.deletePortfolio(id);
+        return ResponseEntity.ok("Portfoilo with ID " + id + " has been deleted successfully.");
 
     }
 

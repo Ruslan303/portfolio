@@ -22,6 +22,7 @@ public class PortfolioServiceImpl {
     public Portfolio createPortfolio(Portfolio portfolio) {
         return portfolioRepository.save(portfolio);
     }
+
     public List<Portfolio>  getAllPortfolios(){
         return portfolioRepository.findAll();
     }
@@ -33,7 +34,7 @@ public class PortfolioServiceImpl {
     }
 
 
-    public void  deletePortfolioById(Long id){
+    public void  deletePortfolio(Long id){
        Portfolio portfolio=  portfolioRepository.findById(id).orElseThrow(()-> new NotFoundException("Portfolio not found with id:"  + id));
         portfolioRepository.delete(portfolio);  // Portfeli silirik
     }

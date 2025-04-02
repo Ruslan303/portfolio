@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: parol12345  # Root istifadəçisinin parolu
+      MYSQL_DATABASE: rusu             # Yaradılacaq database adı
+      MYSQL_USER: root                 # İstifadəçi adı (root olaraq təyin edilib)
+      MYSQL_PASSWORD: 12345        # İstifadəçi parolu
+    ports:
+      - "2222:3306"  # Host və konteyner üçün eyni port

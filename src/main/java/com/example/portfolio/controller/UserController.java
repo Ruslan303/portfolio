@@ -1,7 +1,7 @@
 package com.example.portfolio.controller;
 
+import com.example.portfolio.dto.UserDetails;
 import com.example.portfolio.Entity.User;
-import com.example.portfolio.service.UserService;
 import com.example.portfolio.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -34,8 +34,8 @@ public class UserController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
-        return new ResponseEntity<>(userServiceimpl.updateUser(id, user), HttpStatus.OK);
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody UserDetails userDetails) {
+        return new ResponseEntity<>(userServiceimpl.updateUser(id, userDetails), HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
