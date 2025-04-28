@@ -1,46 +1,68 @@
 package com.example.portfolio.controller;
-
-import com.example.portfolio.dto.UserDetails;
-import com.example.portfolio.Entity.User;
-import com.example.portfolio.service.UserServiceImpl;
+import com.example.portfolio.dto.request.UserRequestDTO;
+import com.example.portfolio.dto.response.UserResponseDTO;
+import com.example.portfolio.service.user.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Optional;
+
+
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/users")
 public class UserController {
-    private final UserServiceImpl userServiceimpl;
 
 
-    @PostMapping("create")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        return new ResponseEntity<>(userServiceimpl.createUser(user), HttpStatus.CREATED);
+    private final UserService userService;
+
+
+    @PostMapping("/create")
+    //@PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserRequestDTO userRequestDTO) {
+        return ResponseEntity.ok(userService.createUser(userRequestDTO));
     }
 
-    @GetMapping("getAllUsers")
-    public ResponseEntity<List<User>> getAllUsers() {
-        return new ResponseEntity<>(userServiceimpl.GetAllUser(), HttpStatus.OK);
+
+
+    @PutMapping("/{id}")
+    //@PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id,@RequestBody UserRequestDTO userRequestDTO) {
+        return ResponseEntity.ok(userService.updateUser(id, userRequestDTO));
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<Optional<User>> getUser(@PathVariable Long id) {
-        return new ResponseEntity<>(userServiceimpl.findUserById(id), HttpStatus.OK);
+
+
+    @GetMapping("/{id}")
+    //@PreAuthorize("hasRole('ADMIN') or hasRole('MEMBER')")
+    public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Long id) {
+        return ResponseEntity.ok(userService.getUserById(id));
     }
 
-    @PutMapping("{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody UserDetails userDetails) {
-        return new ResponseEntity<>(userServiceimpl.updateUser(id, userDetails), HttpStatus.OK);
+
+
+    @GetMapping("portfolio/{portfolioId}")
+    //@PreAuthorize("hasRole('ADMIN') or hasRole('MEMBER')")
+    public ResponseEntity<UserResponseDTO> getUserByPortfolioId(@PathVariable Long portfolioId) {
+        return ResponseEntity.ok(userService.getUserByPortfolioId(portfolioId));
     }
+
+
+
+    @GetMapping
+    //@PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
+        return ResponseEntity.ok(userService.getAllUsers());
+    }
+
+
 
     @DeleteMapping("{id}")
-    public void deleteUser(@PathVariable Long id) {
-        userServiceimpl.deleteUser(id);
+    //@PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<UserResponseDTO> deleteUserById(@PathVariable Long id) {
+        userService.deleteUserById(id);
+        return ResponseEntity.noContent().build();
     }
 
 
