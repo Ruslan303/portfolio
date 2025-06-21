@@ -33,5 +33,14 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleSkillException(SkillException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
+    @ExceptionHandler(AdminException.class)
+    public ResponseEntity<String> handleAdminException(AdminException e) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+    }
+    @ExceptionHandler(EmailException.class)
+    public ResponseEntity<String> handleEmailAlreadyTakenException(EmailException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+    }
+
 
 }
